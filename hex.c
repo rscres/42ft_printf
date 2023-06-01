@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   hex.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rseelaen <rseelaen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 15:16:54 by rseelaen          #+#    #+#             */
-/*   Updated: 2023/06/01 17:48:42 by rseelaen         ###   ########.fr       */
+/*   Created: 2023/06/01 18:10:33 by rseelaen          #+#    #+#             */
+/*   Updated: 2023/06/01 19:04:48 by rseelaen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "ft_printf.h"
-#include "libft/libft.h"
-#include <stdarg.h>
 
-int	ft_printf(const char *str, ...)
+int	ft_puthex(int num)
 {
-	va_list	args;
-
-	va_start(args, str);
-
-
-	return ();
+	if (num > 16)
 }

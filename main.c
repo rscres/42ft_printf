@@ -6,7 +6,16 @@
 /*   By: rseelaen <rseelaen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:21:51 by rseelaen          #+#    #+#             */
-/*   Updated: 2023/05/31 15:21:52 by rseelaen         ###   ########.fr       */
+/*   Updated: 2023/06/01 16:00:38 by rseelaen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_printf.h"
+#include "libft/libft.h"
+#include <stdio.h>
+
+int	main(void)
+{
+	ft_printf();
+	printf();
+}

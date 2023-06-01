@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rseelaen <rseelaen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 15:16:54 by rseelaen          #+#    #+#             */
-/*   Updated: 2023/06/01 17:48:42 by rseelaen         ###   ########.fr       */
+/*   Created: 2023/05/31 19:15:02 by rseelaen          #+#    #+#             */
+/*   Updated: 2023/06/01 18:22:10 by rseelaen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-#include "libft/libft.h"
-#include <stdarg.h>
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-int	ft_printf(const char *str, ...)
-{
-	va_list	args;
+# include <stdarg.h>
+# include <unistd.h>
+# include <stdlib.h>
 
-	va_start(args, str);
+int	ft_printf(const char *s, ...);
 
-
-	return ();
-}
+#endif
