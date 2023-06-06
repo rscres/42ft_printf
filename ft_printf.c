@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: renato <renato@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rseelaen <rseelaen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:16:54 by rseelaen          #+#    #+#             */
-/*   Updated: 2023/06/06 00:27:16 by renato           ###   ########.fr       */
+/*   Updated: 2023/06/06 15:39:20 by rseelaen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,18 @@ int	ft_putstr(char *s)
 	int	len;
 
 	len = 0;
-	while (*s)
+	if (!s)
+	{	
+		write(1, "(null)", 6);
+		len += 6;
+	}
+	else
 	{
-		write(1, s++, 1);
-		len++;
+		while (*s)
+		{
+			write(1, s++, 1);
+			len++;
+		}
 	}
 	return (len);
 }
@@ -60,19 +68,31 @@ int	ft_putnbr(int n)
 	return (len);
 }
 
-void printPointerAddress(void* ptr) {
-    // Do something with the pointer address
-    // Here, we'll simply print it character by character
-    char* address = (char*)&ptr;
-	// ft_puthex((int *)address, 0);
-	write(1, "0x", 2);
-    while (*address != '\0') {
-        ft_putchar(*address);
-        address++;
-    }
+int	sign_checker(int len, va_list args, const char *str)
+{
+	if (*(str + 1) == 'c')
+		len += ft_putchar(va_arg(args, int));
+	else if (*(str + 1) == 's')
+		len += ft_putstr(va_arg(args, char *));
+	else if (*(str + 1) == 'p')
+		len += ft_putpointer(va_arg(args, unsigned long int), 1);
+	else if (*(str + 1) == 'd')
+		len += ft_putnbr(va_arg(args, int));
+	else if (*(str + 1) == 'i')
+		len += ft_putnbr(va_arg(args, int));
+	else if (*(str + 1) == 'u')
+		len += ft_putunsigned(va_arg(args, unsigned int));
+	else if (*(str + 1) == 'X')
+		len += ft_puthex(va_arg(args, unsigned int), 1);
+	else if (*(str + 1) == 'x')
+		len += ft_puthex(va_arg(args, unsigned int), 0);
+	else if (*(str + 1) == '%')
+	{
+		write(1, "%", 1);
+		len++;
+	}
+	return (len);
 }
-
-// int sign_checker(int len, )
 
 int	ft_printf(const char *str, ...)
 {
@@ -87,27 +107,7 @@ int	ft_printf(const char *str, ...)
 	{
 		if (*str == '%')
 		{
-			if (*(str + 1) == 'c')
-				len += ft_putchar(va_arg(args, int));
-			else if (*(str + 1) == 's')
-				len += ft_putstr(va_arg(args, char *));
-			else if (*(str + 1) == 'p')
-				printPointerAddress(va_arg(args, void *));
-			else if (*(str + 1) == 'd')
-				len += ft_putnbr(va_arg(args, int));
-			else if (*(str + 1) == 'i')
-				len += ft_putnbr(va_arg(args, int));
-			else if (*(str + 1) == 'u')
-				len += ft_putunsigned(va_arg(args, unsigned int));
-			else if (*(str + 1) == 'X')
-				len += ft_puthex(va_arg(args, unsigned int), 1);
-			else if (*(str + 1) == 'x')
-				len += ft_puthex(va_arg(args, unsigned int), 0);
-			else if (*(str + 1) == '%')
-			{
-				write(1, "%", 1);
-				len++;
-			}
+			len = sign_checker(len, args, str);
 			str++;
 		}
 		else

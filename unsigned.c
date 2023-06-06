@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unsigned.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: renato <renato@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rseelaen <rseelaen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 23:50:37 by renato            #+#    #+#             */
-/*   Updated: 2023/06/05 23:51:00 by renato           ###   ########.fr       */
+/*   Updated: 2023/06/06 14:40:51 by rseelaen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_putunsigned(unsigned int n)
 {
 	unsigned int	num;
-	int	len;
+	int				len;
 
 	num = 0;
 	len = 0;
