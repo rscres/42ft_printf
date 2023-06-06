@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   unsigned.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: renato <renato@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 19:15:02 by rseelaen          #+#    #+#             */
-/*   Updated: 2023/06/05 23:51:28 by renato           ###   ########.fr       */
+/*   Created: 2023/06/05 23:50:37 by renato            #+#    #+#             */
+/*   Updated: 2023/06/05 23:51:00 by renato           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "ft_printf.h"
 
-# include <stdarg.h>
-# include <unistd.h>
-# include <stdlib.h>
+int	ft_putunsigned(unsigned int n)
+{
+	unsigned int	num;
+	int	len;
 
-# define HEX_CAPS "0123456789ABCDEF"
-# define HEX_LOW "0123456789abcdef"
-
-int	ft_printf(const char *s, ...);
-int	ft_putunsigned(unsigned int n);
-int	ft_puthex(unsigned int n, int caps);
-
-#endif
+	num = 0;
+	len = 0;
+	if (n / 10)
+	{
+		len += ft_putunsigned((n / 10));
+	}
+	num = n % 10 + '0';
+	len += write (1, &num, 1);
+	return (len);
+}

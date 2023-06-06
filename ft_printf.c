@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rseelaen <rseelaen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: renato <renato@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:16:54 by rseelaen          #+#    #+#             */
-/*   Updated: 2023/06/02 20:56:54 by rseelaen         ###   ########.fr       */
+/*   Updated: 2023/06/06 00:27:16 by renato           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,111 +14,109 @@
 #include "libft/libft.h"
 #include <stdarg.h>
 
-void	ft_putchar(char c)
+int	ft_putchar(char c)
 {
 	write(1, &c, 1);
+	return (1);
 }
 
-void	ft_putstr(char *s)
+int	ft_putstr(char *s)
 {
+	int	len;
+
+	len = 0;
 	while (*s)
+	{
 		write(1, s++, 1);
+		len++;
+	}
+	return (len);
 }
 
-void	ft_putnbr(long int n)
+int	ft_putnbr(int n)
 {
-	long int	x;
+	int	num;
+	int	len;
 
-	x = 0;
+	num = 0;
+	len = 0;
 	if (n == -2147483648)
 	{
 		write(1, "-2", 2);
 		n = 147483648;
+		len += 2;
 	}
 	if (n < 0)
 	{
-		write(1, "-", 1);
+		len += write(1, "-", 1);
 		n *= -1;
 	}
 	if (n / 10)
 	{
-		ft_putnbr((n / 10));
+		len += ft_putnbr((n / 10));
 	}
-	x = n % 10 + '0';
-	write (1, &x, 1);
+	num = n % 10 + '0';
+	len += write (1, &num, 1);
+	return (len);
 }
-
-void	ft_puthex(int n, int caps)
-{
-	if (n / 16)
-	{
-		ft_puthex(n / 16, caps);
-	}
-	if (caps)
-		write (1, &HEX_CAPS[n % 16], 1);
-	else
-		write (1, &HEX_LOW[n % 16], 1);
-}
-
-// void	put_address(void *p)
-// {
-// 	char *str;
-
-// 	str = (char *)p;
-// 	while (*str != '\0')
-// 	{
-// 		ft_putchar(*str);
-// 		str++;
-// 	}
-// }
 
 void printPointerAddress(void* ptr) {
     // Do something with the pointer address
     // Here, we'll simply print it character by character
     char* address = (char*)&ptr;
-	ft_puthex((int )address,);
+	// ft_puthex((int *)address, 0);
+	write(1, "0x", 2);
     while (*address != '\0') {
         ft_putchar(*address);
         address++;
     }
 }
 
+// int sign_checker(int len, )
+
 int	ft_printf(const char *str, ...)
 {
 	va_list	args;
-	int		i;
-	char	*temp;
+	int		len;
 
-	i = 0;
-	temp = (char *)str;
+	len = 0;
+	if (!str)
+		return (0);
 	va_start(args, str);
 	while (*str != '\0')
 	{
 		if (*str == '%')
 		{
 			if (*(str + 1) == 'c')
-				ft_putchar(va_arg(args, int));
+				len += ft_putchar(va_arg(args, int));
 			else if (*(str + 1) == 's')
-				ft_putstr(va_arg(args, char *));
+				len += ft_putstr(va_arg(args, char *));
 			else if (*(str + 1) == 'p')
 				printPointerAddress(va_arg(args, void *));
+			else if (*(str + 1) == 'd')
+				len += ft_putnbr(va_arg(args, int));
 			else if (*(str + 1) == 'i')
-				ft_putnbr(va_arg(args, int));
+				len += ft_putnbr(va_arg(args, int));
 			else if (*(str + 1) == 'u')
-				ft_putnbr(va_arg(args, unsigned int));
+				len += ft_putunsigned(va_arg(args, unsigned int));
 			else if (*(str + 1) == 'X')
-				ft_puthex(va_arg(args, int), 1);
+				len += ft_puthex(va_arg(args, unsigned int), 1);
 			else if (*(str + 1) == 'x')
-				ft_puthex(va_arg(args, int), 0);
+				len += ft_puthex(va_arg(args, unsigned int), 0);
 			else if (*(str + 1) == '%')
+			{
 				write(1, "%", 1);
+				len++;
+			}
 			str++;
 		}
 		else
+		{
 			ft_putchar(*str);
+			len++;
+		}
 		str++;
 	}
 	va_end(args);
-
-	return (0);
+	return (len);
 }
