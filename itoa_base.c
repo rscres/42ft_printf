@@ -6,7 +6,7 @@
 /*   By: rseelaen <rseelaen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 21:11:37 by rseelaen          #+#    #+#             */
-/*   Updated: 2023/06/06 17:47:22 by rseelaen         ###   ########.fr       */
+/*   Updated: 2023/06/06 18:42:39 by rseelaen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char	*strwriter(char *str, int len, int n, int base)
 
 	digits = "0123456789abcdef";
 	minus = 0;
-	if (n < 0)
+	if (n < 0 && base == 10)
 		minus = 1;
 	while (len-- > minus)
 	{
@@ -50,14 +50,6 @@ static char	*strwriter(char *str, int len, int n, int base)
 	}
 	return (str);
 }
-
-static int	ft_isalpha(int a)
-{
-	if ((a >= 65 && a <= 90) || (a >= 97 && a <= 122))
-		return (1);
-	return (0);
-}
-
 
 static char	*hex_case(char *str)
 {
