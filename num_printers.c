@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printers.c                                         :+:      :+:    :+:   */
+/*   num_printers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rseelaen <rseelaen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:31:58 by rseelaen          #+#    #+#             */
-/*   Updated: 2023/06/07 15:50:49 by rseelaen         ###   ########.fr       */
+/*   Updated: 2023/06/07 16:01:13 by rseelaen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,33 +59,6 @@ int	ft_putpointer(unsigned long int n, int flag)
 	if (n / 16)
 		len += ft_putpointer(n / 16, flag);
 	write (1, &HEX_LOW[n % 16], 1);
-	return (len);
-}
-
-int	ft_putchar(char c)
-{
-	write(1, &c, 1);
-	return (1);
-}
-
-int	ft_putstr(char *s)
-{
-	int	len;
-
-	len = 0;
-	if (!s)
-	{	
-		write(1, "(null)", 6);
-		len += 6;
-	}
-	else
-	{
-		while (*s)
-		{
-			write(1, s++, 1);
-			len++;
-		}
-	}
 	return (len);
 }
 

@@ -6,12 +6,11 @@
 /*   By: rseelaen <rseelaen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:21:51 by rseelaen          #+#    #+#             */
-/*   Updated: 2023/06/06 15:37:25 by rseelaen         ###   ########.fr       */
+/*   Updated: 2023/06/07 16:05:26 by rseelaen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "libft/libft.h"
 #include <stdio.h>
 #include <limits.h>
 
@@ -53,8 +52,8 @@ int	main(void)
 	//STRING TEST #3**************************
 	ft_len = 0;
 	std_len = 0;
-	ft_len = ft_printf("ft_string: NULL %s NULL \n", NULL);
-	std_len = printf("std_string: NULL %s NULL \n", NULL);
+	ft_len = ft_printf("ft_string: NULL %s NULL \n", (char *)NULL);
+	std_len = printf("std_string: NULL %s NULL \n", (char *)NULL);
 	printf("ft: %d\nstd: %d\n", ft_len, std_len);
 
 	//LOWERCASE HEX TEST**********************
@@ -102,22 +101,22 @@ int	main(void)
 	//POINTER TEST #2****************************
 	ft_len = 0;
 	std_len = 0;
-	ft_len = ft_printf("ft_pointer: %p %p \n", LONG_MIN, LONG_MAX);
-	std_len = printf("std_pointer: %p %p \n", LONG_MIN, LONG_MAX);
+	ft_len = ft_printf("ft_pointer: %p %p \n", (void *)LONG_MIN, (void *)LONG_MAX);
+	std_len = printf("std_pointer: %p %p \n", (void *)LONG_MIN, (void *)LONG_MAX);
 	printf("ft: %d\nstd: %d\n", ft_len, std_len);
 
 	//POINTER TEST #3****************************
 	ft_len = 0;
 	std_len = 0;
-	ft_len = ft_printf("ft_pointer: %p %p \n", INT_MIN, INT_MAX);
-	std_len = printf("std_pointer: %p %p \n", INT_MIN, INT_MAX);
+	ft_len = ft_printf("ft_pointer: %p %p \n", (void *)INT_MIN, (void *)INT_MAX);
+	std_len = printf("std_pointer: %p %p \n", (void *)INT_MIN, (void *)INT_MAX);
 	printf("ft: %d\nstd: %d\n", ft_len, std_len);
 
 	//POINTER TEST #4****************************
 	ft_len = 0;
 	std_len = 0;
-	ft_len = ft_printf("ft_pointer: %p %p \n", ULONG_MAX, -ULONG_MAX);
-	std_len = printf("std_pointer: %p %p \n", ULONG_MAX, -ULONG_MAX);
+	ft_len = ft_printf("ft_pointer: %p %p \n", (void *)ULONG_MAX, (void *)-ULONG_MAX);
+	std_len = printf("std_pointer: %p %p \n", (void *)ULONG_MAX, (void *)-ULONG_MAX);
 	printf("ft: %d\nstd: %d\n", ft_len, std_len);
 
 	//POINTER TEST #5****************************
@@ -126,4 +125,13 @@ int	main(void)
 	ft_len = ft_printf("ft_pointer: %p %p \n", 0, 0);
 	std_len = printf("std_pointer: %p %p \n", 0, 0);
 	printf("ft: %d\nstd: %d\n", ft_len, std_len);
+
+	//NULL TEST************************************
+	ft_len = 0;
+	std_len = 0;
+	printf("ft: ");
+	ft_len = ft_printf(0, 0);
+	printf("\nstd: ");
+	std_len = printf(0, 0);
+	printf("\nft: %d\nstd: %d\n", ft_len, std_len);
 }

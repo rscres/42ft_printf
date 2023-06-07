@@ -7,7 +7,7 @@ CC_FLAGS= -Wall -Werror -Wextra
 #Includes
 INCLUDES=./libftprintf.h
 #Source files
-SRC=ft_printf.c hex.c unsigned.c itoa_base.c
+SRC=ft_printf.c num_printers.c
 #Object files
 OBJ=$(SRC:.c=.o)
 

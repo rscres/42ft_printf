@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rseelaen <rseelaen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/24 18:43:54 by rseelaen          #+#    #+#             */
-/*   Updated: 2023/05/12 16:25:22 by rseelaen         ###   ########.fr       */
+/*   Created: 2023/06/07 17:56:59 by rseelaen          #+#    #+#             */
+/*   Updated: 2023/06/07 20:45:31 by rseelaen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
+#include <stdio.h>
+#include <limits.h>
 
-char	*ft_strchr(const char *str, int c)
+int	main(void)
 {
-	if (c == '\0')
-		return ((char *)str + ft_strlen(str));
-	if (!ft_isascii(c))
-		return ((char *)str);
-	while (*str)
-	{
-		if (*str == c)
-			return ((char *)str);
-		str++;
-	}
-	return (NULL);
+	int len1 = 0;
+	int len2 = 0;
+
+	len1 = ft_printf("' %#x '", 10);
+	printf("\n");
+	len2 = printf("' %#x '", 10);
+	printf("\n");
+	printf("%d\n%d\n", len1, len2);
 }

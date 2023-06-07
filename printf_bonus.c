@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   printf_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rseelaen <rseelaen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 15:16:54 by rseelaen          #+#    #+#             */
-/*   Updated: 2023/06/07 20:52:36 by rseelaen         ###   ########.fr       */
+/*   Created: 2023/06/07 13:59:06 by rseelaen          #+#    #+#             */
+/*   Updated: 2023/06/07 20:54:17 by rseelaen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ int	hashtag_handler(const char *str, va_list args, int len)
 		return (len);
 	}
 	len += write(1, "0x", 2);
-	if (*(str + 2) == 'x')
-		len += ft_puthex(num, 0);
-	else if (*(str + 2) == 'X')
+	if (*(str + 2) == 'X')
 		len += ft_puthex(num, 1);
+	else if (*(str + 2) == 'x')
+		len += ft_puthex(num, 0);
 	return (len);
 }
 
@@ -99,7 +99,10 @@ int	ft_printf(const char *str, ...)
 		if (*str == '%')
 		{
 			if (flag_checker(str))
-				len = hashtag_handler(str++, args, len);
+			{
+				len = hashtag_handler(str, args, len);
+				str++;
+			}
 			else
 				len = sign_checker(len, args, str);
 			str++;
