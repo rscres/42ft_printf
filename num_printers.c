@@ -1,16 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hex.c                                              :+:      :+:    :+:   */
+/*   printers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rseelaen <rseelaen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/05 23:44:34 by renato            #+#    #+#             */
-/*   Updated: 2023/06/06 14:15:49 by rseelaen         ###   ########.fr       */
+/*   Created: 2023/06/07 15:31:58 by rseelaen          #+#    #+#             */
+/*   Updated: 2023/06/07 15:50:49 by rseelaen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+int	ft_putunsigned(unsigned int n)
+{
+	unsigned int	num;
+	int				len;
+
+	num = 0;
+	len = 0;
+	if (n / 10)
+		len += ft_putunsigned((n / 10));
+	num = n % 10 + '0';
+	len += write (1, &num, 1);
+	return (len);
+}
 
 int	ft_puthex(unsigned int n, int caps)
 {
@@ -31,12 +45,12 @@ int	ft_putpointer(unsigned long int n, int flag)
 	int	len;
 
 	len = 1;
-	if (n == 0)
+	if (!n)
 	{
 		write(1, "(nil)", 5);
 		return (len = 5);
 	}
-	if (flag == 1)
+	if (flag)
 	{
 		write(1, "0x", 2);
 		len += 2;
@@ -45,5 +59,57 @@ int	ft_putpointer(unsigned long int n, int flag)
 	if (n / 16)
 		len += ft_putpointer(n / 16, flag);
 	write (1, &HEX_LOW[n % 16], 1);
+	return (len);
+}
+
+int	ft_putchar(char c)
+{
+	write(1, &c, 1);
+	return (1);
+}
+
+int	ft_putstr(char *s)
+{
+	int	len;
+
+	len = 0;
+	if (!s)
+	{	
+		write(1, "(null)", 6);
+		len += 6;
+	}
+	else
+	{
+		while (*s)
+		{
+			write(1, s++, 1);
+			len++;
+		}
+	}
+	return (len);
+}
+
+int	ft_putnbr(int n)
+{
+	int	num;
+	int	len;
+
+	num = 0;
+	len = 0;
+	if (n == -2147483648)
+	{
+		write(1, "-2", 2);
+		n = 147483648;
+		len += 2;
+	}
+	if (n < 0)
+	{
+		len += write(1, "-", 1);
+		n = -n;
+	}
+	if (n / 10)
+		len += ft_putnbr((n / 10));
+	num = n % 10 + '0';
+	len += write (1, &num, 1);
 	return (len);
 }
