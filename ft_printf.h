@@ -6,7 +6,7 @@
 /*   By: rseelaen <rseelaen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 19:15:02 by rseelaen          #+#    #+#             */
-/*   Updated: 2023/06/07 17:27:01 by rseelaen         ###   ########.fr       */
+/*   Updated: 2023/06/08 18:38:11 by rseelaen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@
 
 # define HEX_CAPS "0123456789ABCDEF"
 # define HEX_LOW "0123456789abcdef"
+
+//FLAGS
+# define HEX_FLAG 0b1
+# define SPACE_FLAG 0b10
+# define PLUS_FLAG 0b100
 
 //ft_printf.c
 int		ft_printf(const char *s, ...);

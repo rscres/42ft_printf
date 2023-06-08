@@ -6,7 +6,7 @@
 /*   By: rseelaen <rseelaen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:16:54 by rseelaen          #+#    #+#             */
-/*   Updated: 2023/06/07 20:52:36 by rseelaen         ###   ########.fr       */
+/*   Updated: 2023/06/08 19:41:05 by rseelaen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,16 @@ int	hashtag_handler(const char *str, va_list args, int len)
 		len += write(1, "0", 1);
 		return (len);
 	}
-	len += write(1, "0x", 2);
-	if (*(str + 2) == 'x')
-		len += ft_puthex(num, 0);
-	else if (*(str + 2) == 'X')
+	if (*(str + 2) == 'X')
+	{
+		len += write(1, "0X", 2);
 		len += ft_puthex(num, 1);
+	}
+	else if (*(str + 2) == 'x')
+	{
+		len += write(1, "0x", 2);
+		len += ft_puthex(num, 0);
+	}
 	return (len);
 }
 
