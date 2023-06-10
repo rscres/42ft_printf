@@ -6,7 +6,7 @@
 /*   By: rseelaen <rseelaen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 19:15:02 by rseelaen          #+#    #+#             */
-/*   Updated: 2023/06/08 18:38:11 by rseelaen         ###   ########.fr       */
+/*   Updated: 2023/06/09 19:17:14 by rseelaen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,17 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-# define HEX_CAPS "0123456789ABCDEF"
-# define HEX_LOW "0123456789abcdef"
+//HEX KEYS
+# define HEX_CAPS	"0123456789ABCDEF"
+# define HEX_LOW	"0123456789abcdef"
 
 //FLAGS
-# define HEX_FLAG 0b1
+# define HEX_FLAG 	0b1
 # define SPACE_FLAG 0b10
-# define PLUS_FLAG 0b100
+# define PLUS_FLAG 	0b100
+# define MINUS_FLAG 0b1000
+# define ZERO_FLAG 	0b10000
+# define DOT_FLAG 	0b100000
 
 //ft_printf.c
 int		ft_printf(const char *s, ...);
