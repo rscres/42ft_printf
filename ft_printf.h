@@ -6,7 +6,7 @@
 /*   By: rseelaen <rseelaen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 19:15:02 by rseelaen          #+#    #+#             */
-/*   Updated: 2023/06/12 14:32:15 by rseelaen         ###   ########.fr       */
+/*   Updated: 2023/06/12 17:01:44 by rseelaen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@
 int		ft_printf(const char *s, ...);
 int		ft_putstr(char *s);
 int		ft_putchar(char c);
+int		flag_handler(const char *str, va_list args, int len,
+			unsigned char flags);
 
 //num_printers.c
 int		ft_putunsigned(unsigned int n);
@@ -44,5 +46,11 @@ int		ft_putpointer(unsigned long int n, int flag);
 int		plus_handler(va_list args, int len);
 int		space_handler(va_list args, int len);
 int		hashtag_handler(const char c, va_list args, int len);
+
+//checkers.c
+int		format_checker(int len, va_list args, const char *str);
+int		is_flag(char c);
+int		flag_setter(unsigned char flags, char c);
+int		is_placeholder(char c);
 
 #endif

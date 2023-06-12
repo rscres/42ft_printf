@@ -7,7 +7,7 @@ CC_FLAGS= -Wall -Werror -Wextra
 #Includes
 INCLUDES=./libftprintf.h
 #Source files
-SRC=ft_printf.c num_printers.c handlers.c
+SRC=ft_printf.c num_printers.c handlers.c checkers.c
 #Object files
 OBJ=$(SRC:.c=.o)
 
@@ -18,6 +18,9 @@ $(NAME): $(OBJ)
 
 %.o: %.c
 	$(CC) $(CC_FLAGS) -I $(INCLUDES) -c $< -o $@
+
+bonus: $(OBJ)
+	ar -rcs $(NAME) $(OBJ) 
 
 clean:
 	rm -rf $(OBJ)

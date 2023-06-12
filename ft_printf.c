@@ -6,7 +6,7 @@
 /*   By: rseelaen <rseelaen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:16:54 by rseelaen          #+#    #+#             */
-/*   Updated: 2023/06/12 15:05:35 by rseelaen         ###   ########.fr       */
+/*   Updated: 2023/06/12 17:08:42 by rseelaen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,111 +34,61 @@ int	ft_putstr(char *s)
 	return (len);
 }
 
-int format_checker(int len, va_list args, const char *str)
+int	flag_printer(unsigned int flags, const char c, va_list args)
 {
-	if (*(str + 1) == 'c')
-		len += ft_putchar(va_arg(args, int));
-	else if (*(str + 1) == 's')
-		len += ft_putstr(va_arg(args, char *));
-	else if (*(str + 1) == 'p')
-		len += ft_putpointer(va_arg(args, unsigned long int), 1);
-	else if (*(str + 1) == 'd' || *(str + 1) == 'i')
-		len += ft_putnbr(va_arg(args, int));
-	else if (*(str + 1) == 'u')
-		len += ft_putunsigned(va_arg(args, unsigned int));
-	else if (*(str + 1) == 'X')
-		len += ft_puthex(va_arg(args, unsigned int), 1);
-	else if (*(str + 1) == 'x')
-		len += ft_puthex(va_arg(args, unsigned int), 0);
-	else if (*(str + 1) == '%')
-		len += write(1, "%", 1);
+	int	len;
+
+	len = 0;
+	if ((flags & HEX_FLAG) && (c == 'x' || c == 'X'))
+		len = hashtag_handler(c, args, len);
+	if ((flags & PLUS_FLAG) && (c == 'd' || c == 'i'))
+		len = plus_handler(args, len);
+	else if ((flags & SPACE_FLAG) && (c == 'd'
+			|| c == 'i' || c == 's'))
+	{
+		if (c == 's')
+			len += ft_putstr(va_arg(args, char *));
+		else if (c == 'd' || c == 'i')
+			len = space_handler(args, len);
+	}
 	return (len);
 }
 
-int is_flag(char c)
+int	flag_handler(const char *str, va_list args, int len, unsigned char flags)
 {
-	if (c == ' ' || c == '#' || c == '+')
-		return (1);
-	return (0);
-}
-
-int flag_setter(unsigned char flags, char c)
-{
-	if (c == '#')
-		flags |= HEX_FLAG;
-	else if (c == '+')
+	if (!is_placeholder(*(str + 1)))
 	{
-		flags |= PLUS_FLAG;
-		flags &= ~(SPACE_FLAG);
+		len += write(1, "%", 1);
+		if (flags & HEX_FLAG)
+			len += write(1, "#", 1);
+		if (flags & PLUS_FLAG)
+			len += write(1, "+", 1);
+		else if (flags & SPACE_FLAG)
+			len += write(1, " ", 1);
 	}
-	else if (c == ' ' && (flags & PLUS_FLAG) == 0)
-		flags |= SPACE_FLAG;
-	return (flags);
+	else
+		len += flag_printer(flags, *(str + 1), args);
+	return (len);
 }
 
-int is_placeholder(char c)
+int	ft_printf(const char *str, ...)
 {
-	if (c == 'c' || c == 's' || c == 'i' || c == 'd' || c == 'x' || c == 'X' || c == 'u' || c == 'p')
-		return (1);
-	return (0);
-}
-
-int ft_printf(const char *str, ...)
-{
-	va_list args;
-	int len;
-	unsigned char flags;
+	va_list			args;
+	int				len;
+	unsigned char	flags;
 
 	if (!str)
 		return (-1);
 	len = 0;
-	flags = 0;
 	va_start(args, str);
 	while (*str != '\0')
 	{
+		flags = 0;
 		if (*str == '%' && is_flag(*(str + 1)))
 		{
 			while (is_flag(*(str + 1)))
-			{
-				flags = flag_setter(flags, *(str + 1));
-				str++;
-			}
-			if (!is_placeholder(*(str + 1)))
-			{
-				len += write(1, "%", 1);
-				if (flags & HEX_FLAG)
-					len += write(1, "#", 1);
-				if (flags & PLUS_FLAG)
-					len += write(1, "+", 1);
-				else if (flags & SPACE_FLAG)
-					len += write(1, " ", 1);
-				flags = 0;
-			}
-			else
-			{
-				if ((flags & HEX_FLAG) && (*(str + 1) == 'x'
-						|| *(str + 1) == 'X'))
-				{
-					len = hashtag_handler(*(str + 1), args, len);
-					str++;
-				}
-				if ((flags & PLUS_FLAG) && (*(str + 1) == 'd'
-						|| *(str + 1) == 'i'))
-				{
-					len = plus_handler(args, len);
-					str++;
-				}
-				else if ((flags & SPACE_FLAG) && (*(str + 1) == 'd'
-						|| *(str + 1) == 'i' || *(str + 1) == 's'))
-				{
-					if (*(str + 1) == 's')
-						len += ft_putstr(va_arg(args, char *));
-					else if (*(str + 1) == 'd' || *(str + 1) == 'i')
-						len = space_handler(args, len);
-					str++;
-				}
-				flags = 0;
-			}
+				flags = flag_setter(flags, *((str++) + 1));
+			len = flag_handler(str++, args, len, flags);
 		}
 		else if (*str == '%' && !is_flag(*(str + 1)))
 			len = format_checker(len, args, str++);
@@ -152,7 +102,7 @@ int ft_printf(const char *str, ...)
 
 // int main(void)
 // {
-// 	int len1 = ft_printf("' %x %d '\n", 100);
-// 	int len2 = printf("' %x %d '\n", 100);
+// 	int len1 = ft_printf("' %x % d %#x'\n", 100, 100, 100);
+// 	int len2 = printf("' %x % d %#x'\n", 100, 100, 100);
 // 	printf("len1: %d\nlen2: %d\n", len1, len2);
 // }
