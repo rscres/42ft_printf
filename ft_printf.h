@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: renato <renato@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rseelaen <rseelaen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 19:15:02 by rseelaen          #+#    #+#             */
-/*   Updated: 2023/06/12 02:37:48 by renato           ###   ########.fr       */
+/*   Updated: 2023/06/12 14:32:15 by rseelaen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ int		ft_putnbr(int n);
 int		ft_puthex(unsigned int n, int caps);
 int		ft_putpointer(unsigned long int n, int flag);
 
-//printf_bonus.c
-int		flag_checker(const char *str);
+//handlers.c
+int		plus_handler(va_list args, int len);
+int		space_handler(va_list args, int len);
 int		hashtag_handler(const char c, va_list args, int len);
 
 #endif

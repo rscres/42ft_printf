@@ -3,48 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: renato <renato@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rseelaen <rseelaen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:16:54 by rseelaen          #+#    #+#             */
-/*   Updated: 2023/06/12 02:44:36 by renato           ###   ########.fr       */
+/*   Updated: 2023/06/12 15:05:35 by rseelaen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
 
-int	hashtag_handler(const char c, va_list args, int len)
-{
-	unsigned int	num;
-
-	num = va_arg(args, unsigned int);
-	if (num == 0)
-	{
-		len += write(1, "0", 1);
-		return (len);
-	}
-	if (c == 'X')
-	{
-		len += write(1, "0X", 2);
-		len += ft_puthex(num, 1);
-	}
-	else if (c == 'x')
-	{
-		len += write(1, "0x", 2);
-		len += ft_puthex(num, 0);
-	}
-	return (len);
-}
-
-int ft_putchar(char c)
+int	ft_putchar(char c)
 {
 	write(1, &c, 1);
 	return (1);
 }
 
-int ft_putstr(char *s)
+int	ft_putstr(char *s)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	if (!s)
@@ -57,7 +34,7 @@ int ft_putstr(char *s)
 	return (len);
 }
 
-int sign_checker(int len, va_list args, const char *str)
+int format_checker(int len, va_list args, const char *str)
 {
 	if (*(str + 1) == 'c')
 		len += ft_putchar(va_arg(args, int));
@@ -85,7 +62,7 @@ int is_flag(char c)
 	return (0);
 }
 
-int flag_setter(int flags, char c)
+int flag_setter(unsigned char flags, char c)
 {
 	if (c == '#')
 		flags |= HEX_FLAG;
@@ -110,7 +87,7 @@ int ft_printf(const char *str, ...)
 {
 	va_list args;
 	int len;
-	unsigned int flags;
+	unsigned char flags;
 
 	if (!str)
 		return (-1);
@@ -145,18 +122,28 @@ int ft_printf(const char *str, ...)
 					len = hashtag_handler(*(str + 1), args, len);
 					str++;
 				}
+				if ((flags & PLUS_FLAG) && (*(str + 1) == 'd'
+						|| *(str + 1) == 'i'))
+				{
+					len = plus_handler(args, len);
+					str++;
+				}
+				else if ((flags & SPACE_FLAG) && (*(str + 1) == 'd'
+						|| *(str + 1) == 'i' || *(str + 1) == 's'))
+				{
+					if (*(str + 1) == 's')
+						len += ft_putstr(va_arg(args, char *));
+					else if (*(str + 1) == 'd' || *(str + 1) == 'i')
+						len = space_handler(args, len);
+					str++;
+				}
 				flags = 0;
 			}
 		}
 		else if (*str == '%' && !is_flag(*(str + 1)))
-		{
-			len = sign_checker(len, args, str);
-			str++;
-		}
+			len = format_checker(len, args, str++);
 		else
-		{
 			len += ft_putchar(*str);
-		}
 		str++;
 	}
 	va_end(args);
@@ -165,7 +152,7 @@ int ft_printf(const char *str, ...)
 
 // int main(void)
 // {
-// 	int len1 = ft_printf("' %x %#+y %#x'\n", 100, 100);
-// 	int len2 = printf("' %x %#+y %#x'\n", 100, 100);
+// 	int len1 = ft_printf("' %x %d '\n", 100);
+// 	int len2 = printf("' %x %d '\n", 100);
 // 	printf("len1: %d\nlen2: %d\n", len1, len2);
 // }
