@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rseelaen <rseelaen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: renato <renato@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 19:15:02 by rseelaen          #+#    #+#             */
-/*   Updated: 2023/06/09 19:17:14 by rseelaen         ###   ########.fr       */
+/*   Updated: 2023/06/12 02:37:48 by renato           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,6 @@ int		ft_putpointer(unsigned long int n, int flag);
 
 //printf_bonus.c
 int		flag_checker(const char *str);
-int		hashtag_handler(const char *str, va_list args, int len);
+int		hashtag_handler(const char c, va_list args, int len);
 
 #endif
